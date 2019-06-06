@@ -1,10 +1,10 @@
 import Vue from "vue";
 import createMixin from "./mixin"
 import createInstance from "./jsonld"
-import { Option } from "./typing";
+import { Option } from "./typing"
 
 interface Install {
-  (vue: Vue, options: Option): void;
+  (vue: Vue, options: Option): void
   installed?: boolean
 }
 
