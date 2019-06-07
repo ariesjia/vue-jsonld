@@ -15,7 +15,7 @@ import VueJsonLD from 'vue-jsonld'
 
 Vue.use(VueJsonLD)
 ```
-
+#### json
 ```html
 <template>
   ...
@@ -29,6 +29,31 @@ Vue.use(VueJsonLD)
       "name": "vue-jsonld",
       "description": "Declarative JSON-LD Structured Data for Vue App",
       "discussionUrl": "https://github.com/ariesjia/vue-jsonld"
+    },
+  }
+</script>
+```
+#### function
+```html
+<template>
+  ...
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        name: 'vue-jsonld' 
+      },
+    }
+    jsonld() {
+      return {
+         "@context": "http://schema.org/",
+         "@type": "Code",
+         "name": this.name,
+         "description": "Declarative JSON-LD Structured Data for Vue App",
+         "discussionUrl": "https://github.com/ariesjia/vue-jsonld"
+      }
     },
   }
 </script>
