@@ -1,5 +1,5 @@
 # vue-jsonld
-> Declarative JSON-LD Structured Data for Vue App
+> Declarative JSON-LD Structured Data for Vue App. SSR supported
 
 [![NPM](https://img.shields.io/npm/v/vue-jsonld.svg)](https://www.npmjs.com/package/vue-jsonld)
 
@@ -57,4 +57,35 @@ Vue.use(VueJsonLD)
     },
   }
 </script>
+```
+
+
+## SSR
+
+server-entry.js
+```js
+import app from './app'
+
+const router = app.$router
+const $jsonld = app.$jsonld()
+
+export default (context) => {
+  router.push(context.url)
+  context.jsonld = jsonld
+  return app
+}
+```
+index.template.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>demo</title>
+  {{{ jsonld.html }}}
+</head>
+<body>
+  <!--vue-ssr-outlet-->
+</body>
+</html>
 ```
