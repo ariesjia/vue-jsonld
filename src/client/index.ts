@@ -22,9 +22,25 @@ function clearTags(headTag: HTMLHeadElement) {
   oldHeadTags.forEach(tag => tag.parentNode.removeChild(tag))
 }
 
-export const triggerHeadUpdate = (list: RowData[]) => {
+
+function update(list: RowData[]) {
   const headTag = getTag('head')
   clearTags(headTag)
   const newTags = getTags(list).map(createScriptTag)
   newTags.forEach(tag => headTag.appendChild(tag))
+}
+
+let BatchTimeHandler
+
+function batch(func, timeout: number = 10) {
+  return (...args) => {
+    clearTimeout(BatchTimeHandler);
+    BatchTimeHandler = setTimeout(function () {
+      func(...args)
+    }, timeout);
+  }
+}
+
+export const triggerHeadUpdate = (list: RowData[]) => {
+  batch(update)(list)
 }
