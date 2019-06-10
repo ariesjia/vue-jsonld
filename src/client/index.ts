@@ -41,6 +41,4 @@ function batch(func, timeout: number = 10) {
   }
 }
 
-export const triggerHeadUpdate = (list: RowData[]) => {
-  batch(update)(list)
-}
+export const triggerHeadUpdate = batch(update)
