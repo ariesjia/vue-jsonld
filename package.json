@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.14",
     "@vue/cli-service": "^3.8.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
     "jest": "^24.8.0",
     "jest-transform-stub": "^2.0.0",
     "rollup": "^1.14.2",
@@ -37,6 +38,7 @@
     "ts-jest": "^24.0.2",
     "ts-loader": "^6.0.1",
     "typescript": "^3.4.5",
+    "vue": "^2.6.10",
     "vue-jest": "^3.0.4",
     "vue-router": "^3.0.6",
     "vue-template-compiler": "^2.6.10",
