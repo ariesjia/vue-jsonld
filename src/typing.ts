@@ -4,4 +4,6 @@ export interface RowData {
 }
 
 export interface Option {
+  batchTime?: number
+  space?: number
 }

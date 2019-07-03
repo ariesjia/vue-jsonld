@@ -1,11 +1,11 @@
 import {isFunction} from "./utils/is";
 import {ensuredPush, ensureIsObject} from "./utils/ensure";
 import uid from "./utils/uuid";
-import { triggerHeadUpdate } from "./client";
-import { OPTION_NAME, COMPUTED_NAME } from "./constant";
-import { RowData } from "./typing";
+import {triggerHeadUpdate} from "./client";
+import {COMPUTED_NAME, OPTION_NAME} from "./constant";
+import {Option, RowData} from "./typing";
+import {VueConstructor} from "vue";
 
-const optionName = OPTION_NAME
 const computedName = COMPUTED_NAME
 
 const buildRow = (id, data) => ({
@@ -13,8 +13,7 @@ const buildRow = (id, data) => ({
  data
 })
 
-const updateType = (list: RowData[], id: string, data, isServer: boolean) => {
-  console.log('updateType');
+const updateType = (list: RowData[], id: string, data, isServer: boolean, batchTime?: number) => {
   const index = list.findIndex(item => item.id === id)
   if (index>=0) {
     list.splice(
@@ -26,11 +25,11 @@ const updateType = (list: RowData[], id: string, data, isServer: boolean) => {
     list.push(buildRow(id, data))
   }
   if (!isServer) {
-    triggerHeadUpdate(list)
+    triggerHeadUpdate(batchTime)(list)
   }
 }
 
-const removeType = (list: RowData[], id: string, isServer: boolean) => {
+const removeType = (list: RowData[], id: string, isServer: boolean, batchTime?: number) => {
   const index = list.findIndex(item => item.id === id)
   if (index>=0) {
     list.splice(
@@ -39,17 +38,17 @@ const removeType = (list: RowData[], id: string, isServer: boolean) => {
     )
   }
   if (!isServer) {
-    triggerHeadUpdate(list)
+    triggerHeadUpdate(batchTime)(list)
   }
 }
 
-export default function createMixin(Vue, options) {
+export default function createMixin(Vue: VueConstructor, option?: Option) {
   return {
     beforeCreate() {
       const $root = this.$root
       const options = this.$options
       const isServer = this.$isServer
-      const jsonldValue = options[optionName]
+      const jsonldValue = options[OPTION_NAME]
       const jsonldId = uid(10)
 
       if (!$root._jsonld) {
@@ -58,44 +57,39 @@ export default function createMixin(Vue, options) {
         }
       }
 
-      if(!!options[optionName]) {
+      const update = (value) => updateType(
+        $root._jsonld.data,
+        jsonldId,
+        value,
+        isServer,
+        option.batchTime,
+      )
+
+      const remove = () => removeType(
+        $root._jsonld.data,
+        jsonldId,
+        isServer,
+        option.batchTime,
+      )
+
+      if(!!options[OPTION_NAME]) {
         if (isFunction(jsonldValue) ) {
           ensureIsObject(this.$options, 'computed')
           this.$options.computed[computedName] = jsonldValue
           ensuredPush(this.$options, 'created', () => {
-            updateType(
-              $root._jsonld.data,
-              jsonldId,
-              this[computedName],
-              isServer
-            )
+            update(this[computedName])
             this.$watch(computedName, function (value) {
-              updateType(
-                $root._jsonld.data,
-                jsonldId,
-                value,
-                isServer
-              )
+              update(value)
             })
           })
         } else {
           this[computedName] = jsonldValue
           ensuredPush(this.$options, 'created', () => {
-            updateType(
-              $root._jsonld.data,
-              jsonldId,
-              jsonldValue,
-              isServer
-            )
+            update(jsonldValue)
           })
         }
-
         ensuredPush(this.$options, 'destroyed', () => {
-          removeType(
-            $root._jsonld.data,
-            jsonldId,
-            isServer
-          )
+          remove()
         })
       }
 

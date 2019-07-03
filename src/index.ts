@@ -8,7 +8,7 @@ interface Install {
   installed?: boolean
 }
 
-export const install: Install = (vue: VueConstructor, options) => {
+export const install: Install = (vue: VueConstructor, options: Option = {}) => {
   if (!install.installed) {
     vue.prototype.$jsonld = createInstance(options)
     vue.mixin(createMixin(vue, options))

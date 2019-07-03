@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/ariesjia/vue-jsonld#readme",
   "peerDependencies": {
-    "vue": "^2.6.0"
+    "vue": "^2.5.22"
   },
   "devDependencies": {
     "@types/jest": "^24.0.14",

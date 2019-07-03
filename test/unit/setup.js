@@ -1,3 +1,3 @@
-import Vue from 'vue'
+const Vue = require('vue')
 
 Vue.config.productionTip = false

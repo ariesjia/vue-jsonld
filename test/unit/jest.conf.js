@@ -13,6 +13,7 @@ module.exports = {
   },
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
+    "^test/(.*)$": "<rootDir>/test/unit/$1",
     "^config$": "<rootDir>/config/index.js"
   },
   setupFiles: ["<rootDir>/test/unit/setup"],

@@ -32,7 +32,7 @@ function update(list: RowData[]) {
 
 let BatchTimeHandler
 
-function batch(func, timeout: number = 10) {
+function batch(func, timeout) {
   return (...args) => {
     clearTimeout(BatchTimeHandler);
     BatchTimeHandler = setTimeout(function () {
@@ -41,4 +41,4 @@ function batch(func, timeout: number = 10) {
   }
 }
 
-export const triggerHeadUpdate = batch(update)
+export const triggerHeadUpdate = (timeout: number = 10) => batch(update, timeout)
