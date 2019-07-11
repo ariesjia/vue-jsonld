@@ -2,6 +2,9 @@
 > Declarative JSON-LD Structured Data for Vue App. SSR supported
 
 [![NPM](https://img.shields.io/npm/v/vue-jsonld.svg)](https://www.npmjs.com/package/vue-jsonld)
+[![Build Status](https://travis-ci.org/ariesjia/vue-jsonld.svg?branch=master)](https://travis-ci.org/ariesjia/vue-jsonld)
+[![minified](https://badgen.net/bundlephobia/minzip/vue-jsonld)](https://bundlephobia.com/result?p=vue-jsonld)
+[![coverage](https://badgen.net/codecov/c/github/ariesjia/vue-jsonld)](https://codecov.io/gh/ariesjia/vue-jsonld)
 
 ## Install
 ```bash
