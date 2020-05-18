@@ -70,7 +70,7 @@ server-entry.js
 import app from './app'
 
 const router = app.$router
-const $jsonld = app.$jsonld()
+const jsonld = app.$jsonld()
 
 export default (context) => {
   router.push(context.url)
